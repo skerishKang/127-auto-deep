@@ -1,0 +1,29 @@
+﻿Key,Title,Type,Priority,StoryPoints,AcceptanceCriteria,Dependencies
+SP-01,캔버스 코어 구현 (노드/엣지/검증/저장),Story,High,8,"- 노드 추가/삭제/이동/속성 편집 가능
+- 엣지 연결/해제 및 경로 Validation (미연결 노드 저장 차단)
+- 그래프 JSON 스키마로 저장/로드 가능
+- 드래그 반응 P95 < 50ms",
+SP-02,Test Run + 로그 스트리밍(WS),Story,High,5,"- 캔버스에서 선택 경로 단일 실행 (샘플 입력)
+- 실행 로그 실시간 WebSocket 스트리밍
+- 실패 시 예외 메시지/스택 표시, 재실행 버튼",SP-01
+SP-03,코드 실행기(샌드박스/패키지 캐시),Story,High,8,"- Python/JS 실행 샌드박스 (CPU/메모리/네트워크 제한)
+- 패키지 allowlist 설치/캐시 (requests, pandas 등)
+- 타임아웃 60초, Artifacts 다운로드",SP-01
+SP-4,AI 노드(요약/분류/번역 + 공급자 스위치),Story,High,8,"- OpenAI/Anthropic/Google 선택 및 키 vault 연동
+- 프롬프트 템플릿 저장/버전
+- 실패 시 지수 백오프 + 폴백 모델(최대 3회)","SP-01,SP-02"
+SP-05,템플릿 10종(1차) + 마켓 UI,Story,Medium,5,"- 카테고리/난이도/ROI 힌트/전제조건 표시
+- '복제 → 파라미터 입력 → 배포' 10분 내 가능
+- 템플릿 업데이트 시 영향도 안내 팝업","SP-01,SP-02,SP-03,SP-04"
+SP-06,모니터링 API + 대시보드 (성공률/지연/실패원인),Story,High,5,"- 워크플로별 성공률/평균/95p 실행시간, 실패원인 Top N
+- 실패율>5% 또는 p95>3분 시 알림 트리거
+- 최근 7일 트렌드 차트","SP-01,SP-02"
+SP-07,OAuth + RBAC + 감사로그,Story,High,5,"- Google/MS OAuth 로그인
+- 워크스페이스/프로젝트 별 Role(Owner/Admin/Editor/Viewer)
+- 설정 변경/배포/삭제 등 감사로그 저장/조회",
+SP-08,비밀 금고(Vault) 연동,Story,High,3,"- Secret create/read/rotate API
+- 사용 범위: 워크스페이스/프로젝트 스코프
+- 키 미설정 시 실행 차단 및 가이드 표시",SP-07
+REL-CHK,릴리즈 체크리스트 자동화(보안/성능/문서/운영),Task,Medium,3,"- Secrets 스캔, 최소권한 룰 적용 여부 리포트
+- 부하 테스트 레포트 아카이브 및 병목 개선 티켓 생성
+- 온보딩/운영 런북 배포","SP-01,SP-02,SP-03,SP-04,SP-06,SP-07,SP-08"
