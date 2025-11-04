@@ -1,0 +1,108 @@
+{
+  "name": "Email Attachment to Drive",
+  "nodes": [
+    {
+      "id": "GmailTrigger1",
+      "name": "Gmail Trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        300,
+        300
+      ],
+      "parameters": {
+        "watchFor": "label",
+        "labelIds": [
+          "INBOX"
+        ]
+      }
+    },
+    {
+      "id": "IF1",
+      "name": "IF Attachment",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        560,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json[\"hasAttachment\"]}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Drive1",
+      "name": "Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 2,
+      "position": [
+        820,
+        300
+      ],
+      "parameters": {
+        "operation": "upload",
+        "binaryData": true,
+        "fileName": "={{$binary.attachment_0.fileName}}"
+      }
+    },
+    {
+      "id": "Sheet1",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        1080,
+        300
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "={{$env.SHEET_ID}}",
+        "range": "A:D"
+      }
+    }
+  ],
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "IF Attachment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Attachment": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "version": 2
+}

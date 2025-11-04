@@ -1,0 +1,44 @@
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+nav a {
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+nav a:hover {
+  background-color: #f0f0f0;
+  color: #722ed1 !important;
+}
+
+.react-flow__node {
+  border-radius: 8px;
+  border: 2px solid #e8e8e8;
+  padding: 8px;
+  background: white;
+  transition: all 0.2s;
+}
+
+.react-flow__node:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.react-flow__edge {
+  stroke: #999;
+  stroke-width: 2;
+}
+
+.react-flow__edge.animated {
+  stroke-dasharray: 5;
+  animation: dashdraw 0.5s linear infinite;
+}
+
+@keyframes dashdraw {
+  to {
+    stroke-dashoffset: -10;
+  }
+}

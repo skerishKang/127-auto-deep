@@ -1,0 +1,115 @@
+{
+  "name": "OCR Invoice to Sheets",
+  "nodes": [
+    {
+      "id": "DriveTrigger1",
+      "name": "Google Drive Trigger",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        300,
+        300
+      ],
+      "parameters": {
+        "watchFor": "file",
+        "foldersToWatch": "specific"
+      }
+    },
+    {
+      "id": "HTTP1",
+      "name": "OCR API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        560,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.OCR_URL}}",
+        "jsonParameters": true,
+        "options": {
+          "timeout": 30
+        }
+      }
+    },
+    {
+      "id": "Map1",
+      "name": "Map Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        820,
+        300
+      ],
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "invoiceNumber",
+              "value": "={{$json[\"ocr\"][\"invoice_no\"]}}"
+            },
+            {
+              "name": "total",
+              "value": "={{$json[\"ocr\"][\"total\"]}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Sheet2",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        1080,
+        300
+      ],
+      "parameters": {
+        "operation": "append",
+        "sheetId": "={{$env.SHEET_ID}}",
+        "range": "A:B"
+      }
+    }
+  ],
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "OCR API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OCR API": {
+      "main": [
+        [
+          {
+            "node": "Map Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "version": 2
+}

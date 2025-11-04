@@ -9,28 +9,8 @@ Viewer,,viewer
 Label
 frontend
 canvas
-graph
 runtime
 ws
-logs
-executor
-security
-ai
-llm
-providers
-templates
-marketplace
-ux
-monitoring
-dashboard
-metrics
-iam
-audit
-secrets
-vault
-release
-ci
-ops
 
 ### Projects
 Project

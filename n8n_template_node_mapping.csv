@@ -1,21 +1,3 @@
 ﻿TemplateName,Nodes,Triggers,NodeParams,Outputs,ErrorHandling,Notes
-메일 첨부 자동 저장/분류,Gmail Trigger -> IF(라벨/확장자) -> Drive Upload -> Google Sheets Append,Gmail New Email,"label, ext_filter, date_range, dest_folder_id, sheet_id","drive_path, sheet_row_id","MissingAttachment, DuplicateName, PermissionDenied -> Slack Alert",중복 방지 해시 컬럼 추가 권장
-회의록 요약→메일,Gmail Search -> LLM(Summarize) -> Gmail Send,Schedule / Manual,"sender_filter, period, tone, recipients[]",summary_email_id,LLMTimeout -> Retry(3) -> Fallback model,스레드 단위 묶음 요약
-엑셀 병합→Master,Drive List -> Loop(Files) -> Sheets Read -> Transform -> Sheets Append,Manual / Schedule,"folder_id, sheet_range, master_sheet_id",master_sheet_id,SchemaMismatch -> Quarantine Folder,스키마 맵핑 테이블 별도 노드 권장
-가격 크롤링→변동 알림,HTTP Request -> HTML Extract -> Compare -> Slack/Gmail,Schedule,"urls[], selector, threshold, recipients[]",alert_message_id,SiteBlocked -> Backoff -> Notify,사이트별 파서 분리
-OCR 인보이스→시트 적재,Webhook/Drive Trigger -> File Download -> OCR API -> Mapper -> Sheets Append,Webhook / Drive New File,"bucket_path, schema_map, sheet_id",sheet_row_id,OCRFail/MapFail -> Review Queue,샘플 10건으로 맵 검증
-DB 백업→S3,Schedule -> Execute Command(Dump) -> Compress -> S3 Upload -> Hash Verify,Schedule,"db_url, bucket, retention_days",s3_object_url,UploadFail -> Retry -> Alert,저장소 비용 모니터링
-일일 리포트 생성,Schedule -> Query(DB/Sheets) -> Chart(Generate) -> Gmail Send,Schedule,"queries[], recipients[]",report_email_id,QueryFail -> Skip -> Alert,차트 생성은 코드 노드 권장
-채용 공고 수집,HTTP Request -> HTML Extract -> Filter -> Sheets Append,Schedule,"sites[], keywords[]",sheet_id,Block/ParseFail -> Backoff,중복 제거 키 필수
-계약서 생성/보관,Webhook -> Template Merge -> PDF Export -> Drive Upload -> Share Link,Webhook / Manual,"party_info, clauses[], dest_folder_id",pdf_url,TemplateError -> Manual Review,전자서명 연계 옵션
-메일 분류/자동응답,Gmail Trigger -> LLM(Classify) -> Gmail Label/Reply -> Sheets Log,Gmail New Email,"label_rules, auto_reply_tpl",stats_json,Misclassify -> Human Review,임계치 이하만 자동 응답
-문서 번역 파이프라인,Drive List -> Loop(Files) -> Split -> LLM(Translate) -> Merge -> Drive Upload,Manual / Schedule,"source_lang, target_lang, style",translated_doc_url,TooLong -> Chunk -> Retry,용량 제한 주의
-RAG Q&A 지식봇,Docs Crawler -> Embed -> Vector Store Upsert -> Webhook Q&A -> LLM Answer,Manual / Webhook,"docs_path, chunk, top_k",endpoint_url,NoContext -> Default Answer,권한 체크 필수
-Slack 일괄 알림,Manual -> Render Template -> Slack Send (Loop Channels),Manual,"channels[], message_tpl",ts_ids[],RateLimit -> Batch Delay,프리뷰 단계 제공
-이미지 일괄 리사이즈,Drive List -> Loop -> Code(Resize) -> Drive Upload -> Report,Manual,"folder_id, sizes[]",report_url,CorruptImage -> Skip -> Log,원본 보존
-CRM 리드 스코어링,CRM Fetch -> Normalize -> Score(LLM/Rule) -> Queue -> Notify,Schedule,"fields_map, weights",scored_sheet_id,MissingField -> DefaultWeight,공정성 점검 권장
-휴가 승인 자동화,Form/Webhook -> Policy Check -> Approve/Reject -> Calendar Update,Webhook,"policy_rules, approvers[]",calendar_event_id,PolicyMismatch -> Manual Review,감사로그 기록
-보안 로그 집계,Collectors -> Normalize -> Rule Engine -> Alert,Schedule / Stream,"sources[], rules[]",alerts_count,FalsePositive -> Suppress,룰 관리 UI 필요
-웹 헬스체크,Schedule -> HTTP Check(Loop) -> Record -> Alert,Schedule,"urls[], interval, timeout",uptime_report_url,Timeout -> Retry -> Alert,SLA 임계치 설정
-매출 데이터 파이프라인,ETL Extract -> Validate -> Aggregate -> Dashboard,Schedule,"sources[], map, schedule",dashboard_url,ValidationFail -> Quarantine,정합성 룰 테이블
-법인카드 경비 정리,Statements Ingest -> OCR Receipts -> Match -> Sheets Append,Schedule,"statements_path, rules",sheet_id,MatchFail -> Review Queue,매칭율 모니터링
+메일 첨부 자동 저장/분류,Gmail Trigger -> IF -> Drive Upload -> Sheets Append,Gmail New Email,"label,ext_filter,dest_folder_id",drive_path,Dup/NoAttachment -> Slack,해시 컬럼 추천
+OCR 인보이스→시트,Drive Trigger -> OCR -> Mapper -> Sheets,Drive New File,"schema_map,sheet_id",sheet_row_id,OCRFail -> Review,샘플 10건 기준

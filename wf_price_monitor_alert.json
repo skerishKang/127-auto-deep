@@ -1,0 +1,105 @@
+{
+  "name": "Price Monitor Alert",
+  "nodes": [
+    {
+      "id": "Schedule1",
+      "name": "Schedule",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        300,
+        300
+      ],
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyMinute",
+              "minuteInterval": 60
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "HTTP2",
+      "name": "Fetch Price",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        560,
+        300
+      ],
+      "parameters": {
+        "url": "={{$env.PRICE_URL}}",
+        "method": "GET"
+      }
+    },
+    {
+      "id": "Function1",
+      "name": "Compare",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        820,
+        300
+      ],
+      "parameters": {
+        "functionCode": "return ($json.priceDelta>=$env.THRESHOLD)?items:[];"
+      }
+    },
+    {
+      "id": "Slack1",
+      "name": "Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        300
+      ],
+      "parameters": {
+        "operation": "postMessage",
+        "channel": "={{$env.SLACK_CH}}",
+        "text": "Price changed: {{$json.priceDelta}}"
+      }
+    }
+  ],
+  "connections": {
+    "Schedule": {
+      "main": [
+        [
+          {
+            "node": "Fetch Price",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Price": {
+      "main": [
+        [
+          {
+            "node": "Compare",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "version": 2
+}

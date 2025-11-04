@@ -1,21 +1,3 @@
-﻿TemplateName,Category,Difficulty,Prerequisites,Inputs,Process,Outputs,Exceptions,TestCases,ROI_Hint
-메일 첨부 자동 저장/분류,메일,Easy,"Gmail/Drive OAuth, 폴더ID","label, ext_filter, date_range",Gmail 라벨 필터→첨부 다운로드→Drive 이동→시트 기록,"drive_path, sheet_row_id",첨부 없음/중복/권한 오류,샘플5건 E2E 100%,반복 다운로드 2h/주 절감
-회의록 요약→메일,협업/AI,Easy,"Gmail OAuth, LLM 키","sender_filter, period, tone",메일 스레드 수집→LLM 요약→수신자별 발송,summary_email_id,길이 초과/요약 실패,실패율<2% 재시도,의사결정 속도↑
-엑셀 병합→Master,데이터/ETL,Medium,"Sheets API, 폴더ID","folder_id, sheet_range",폴더 내 시트 읽기→스키마 정합→Master 병합,master_sheet_id,스키마 불일치/잠금,샘플3개 merge OK,리포트 제작 60%↓
-가격 크롤링→변동 알림,크롤링,Medium,"HTTP 접근 가능, 파서","urls[], selector, threshold",HTML 파싱→가격 비교→변동시 Slack/메일,alert_message_id,차단/구조변경,리트라이 3회,구매 타이밍 최적화
-OCR 인보이스→시트 적재,AI/OCR/회계,Medium,"OCR API 키, 폴더ID","bucket_path, schema_map",PDF→OCR→필드 매핑→시트 적재,sheet_row_id,OCR 실패/맵핑 오류,샘플10건 필드매핑 95%↑,AP 처리 30%↓
-DB 백업→S3,IT/운영,Easy,"DB 접근, S3 키","db_url, schedule, bucket",덤프→압축→S3 업로드→해시 검증,s3_object_url,용량 초과/네트워크,주기 백업 3회 성공,복구 리스크↓
-일일 리포트 생성,협업/리포트,Easy,데이터 소스 접근,"queries[], recipients[]",쿼리 실행→표/그래프 생성→메일 발송,report_email_id,쿼리 실패/권한,테스트 쿼리 OK,경영 가시성↑
-채용 공고 수집,크롤링/HR,Medium,"HTTP 접근, 사이트 목록","sites[], keywords[]",페이지 수집→키워드 필터→시트/알림,sheet_id,차단/중복,중복제거율>95%,채용 속도↑
-계약서 생성/보관,문서,Medium,"템플릿 문서, 서명도구","party_info, clauses[]",템플릿 머지→PDF 생성→드라이브 보관/공유,pdf_url,필드 누락/권한,샘플 계약 3건,법무 처리 시간↓
-메일 분류/자동응답,메일/AI,Easy,"LLM 키, 라벨","label_rules, auto_reply_tpl",LLM 분류→라벨/응답→스레드 기록,stats_json,오분류,정확도>90%,문의응대 50%↓
-문서 번역 파이프라인,AI/번역,Easy,LLM 키,"source_lang, target_lang, style",파일 수집→분할→번역→품질체크→병합,translated_doc_url,길이 초과/품질,BLEU/COMET 기준,해외 영업 지원
-RAG Q&A 지식봇,AI/RAG,Hard,"벡터DB, 임베딩 키","docs_path, chunk, top_k",문서 색인→질의→컨텍스트+LLM 답변,endpoint_url,환각/권한,질문100개 테스트,내부 검색 70%↓
-Slack 일괄 알림,협업,Easy,Slack 토큰,"channels[], message_tpl",메시지 템플릿 렌더→채널별 발송,ts_ids[],레이트리밋,지연<3s,커뮤니케이션↑
-이미지 일괄 리사이즈,파일/미디어,Easy,스토리지 접근,"folder_id, sizes[]",이미지 변환→저장→리포트,report_url,손상/권한,샘플20장 OK,콘텐츠 제작↑
-CRM 리드 스코어링,영업/AI,Medium,"CRM API, LLM","fields_map, weights",정규화→스코어→우선순위 큐→알림,scored_sheet_id,데이터 누락,스코어분포 검증,전환율↑
-휴가 승인 자동화,HR/승인,Easy,캘린더 API,"policy_rules, approvers[]",신청 수집→정책 검사→승인/반려→캘린더 반영,calendar_event_id,정책 불일치,정책테스트 OK,HR 업무↓
-보안 로그 집계,보안/운영,Medium,로그 수집기,"sources[], rules[]",수집→정규화→탐지 룰→알림,alerts_count,오탐,정탐>90%,위협 대응↑
-웹 헬스체크,운영/모니터링,Easy,URL 목록,"urls[], interval, timeout",HTTP 체크→지연/가용성 기록→알림,uptime_report_url,오탐/지연,가용성 99.9%,SLA 관리
-매출 데이터 파이프라인,ETL/재무,Medium,DB/CSV 접근,"sources[], map, schedule",집계→정합성 검사→대시보드 적재,dashboard_url,정합성 실패,샘플 기간 OK,경영지표 정시
-법인카드 경비 정리,회계/RPA,Medium,"카드명세 접근, OCR","statements_path, rules",명세 파싱→영수증 OCR 매칭→시트 적재,sheet_id,매칭 실패,매칭율>90%,경비정리 70%↓
+﻿TemplateName,Category,Difficulty
+메일 첨부 자동 저장/분류,메일,Easy
+OCR 인보이스→시트,AI/OCR,Medium
